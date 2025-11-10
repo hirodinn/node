@@ -1,6 +1,7 @@
-const url = "https://hirebikila.com";
-
-export function log(message, emitter) {
-  console.log(message);
-  emitter.emit("messageLogged", { who: message });
+import { EventEmitter } from "events";
+export class MyEmitter extends EventEmitter {
+  log(message) {
+    this.emit("messageLogged", message);
+  }
 }
+const url = "https://hirebikila.com";

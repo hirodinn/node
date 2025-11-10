@@ -1,7 +1,6 @@
-import { EventEmitter } from "events";
-import { log } from "./logger.js";
-const emitter = new EventEmitter();
-emitter.on("messageLogged", (arg) => {
-  console.log(`${arg.who} logged to the system`);
+import { MyEmitter } from "./logger.js";
+const myEmitter = new MyEmitter();
+myEmitter.on("messageLogged", (arg) => {
+  console.log(`${arg} logged to the system`);
 });
-log("hello hire", emitter);
+myEmitter.log("hire");
