@@ -1,2 +1,2 @@
-const logger = require("./logger");
-logger.log("hire");
+import { log } from "./logger.js";
+log("hire");
