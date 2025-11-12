@@ -6,9 +6,9 @@
 // myEmitter.log("hire");
 
 import http from "http";
-import { json } from "stream/consumers";
 
 const server = http.createServer((req, res) => {
+  console.log("server is called");
   if (req.url === "/") {
     res.write("hello world");
     res.end();
