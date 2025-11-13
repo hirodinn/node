@@ -14,8 +14,10 @@ app.use(authenticate);
 app.use(express.static("public"));
 
 app.use(helmet());
-
-app.use(morgan("tiny"));
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("morgan Enabled");
+}
 
 const courses = [
   { id: 1, name: "course 1" },
