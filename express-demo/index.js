@@ -1,10 +1,15 @@
 import Joi from "joi";
+import debug from "debug";
 import helmet from "helmet";
 import morgan from "morgan";
 import express from "express";
 import logger from "./logger.js";
 import authenticate from "./authenticate.js";
 const app = express();
+
+const startupDebugger = debug("app:startup");
+const dbDebugger = debug("app:db");
+
 app.use(express.json());
 
 app.use(logger);
@@ -16,8 +21,9 @@ app.use(express.static("public"));
 app.use(helmet());
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
-  console.log("morgan Enabled");
+  startupDebugger("morgan Enabled");
 }
+dbDebugger("the database is running");
 
 const courses = [
   { id: 1, name: "course 1" },
