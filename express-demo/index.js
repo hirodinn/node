@@ -13,6 +13,8 @@ const courseSchema = Joi.object({
   name: Joi.string().min(3).required(),
 });
 
+//get
+
 app.get("/", (req, res) => {
   res.send("hello ladies and gentlemen");
 });
@@ -26,6 +28,11 @@ app.get("/api/courses/:id", (req, res) => {
   if (!course) res.status(404).send("the course with this id is not found");
   res.send(course);
 });
+app.get("/api/users", (req, res) => {
+  res.send(req.query);
+});
+
+//post
 
 app.post("/api/courses", (req, res) => {
   const { error } = courseSchema.validate(req.body || {});
@@ -36,8 +43,9 @@ app.post("/api/courses", (req, res) => {
   const course = { id: courses.length + 1, name: req.body.name };
   courses.push(course);
   res.send(course);
-  console.log(courses);
 });
+
+//put
 
 app.put("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === Number(req.params.id));
@@ -51,9 +59,15 @@ app.put("/api/courses/:id", (req, res) => {
   res.send(course);
 });
 
-// app.get("/api/users", (req, res) => {
-//   res.send(req.query);
-// });
+//delete
+
+app.delete("/api/courses/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const course = courses.find((c) => c.id === id);
+  if (!course) res.status(404).send("the course with this id is not found");
+  courses.splice(courses.indexOf(course), 1);
+  res.send(course);
+});
 
 const port = process.env.PORT || 3000;
 
