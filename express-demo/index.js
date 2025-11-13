@@ -1,7 +1,13 @@
 import Joi from "joi";
 import express from "express";
+import logger from "./logger.js";
+import authenticate from "./authenticate.js";
 const app = express();
 app.use(express.json());
+
+app.use(logger);
+
+app.use(authenticate);
 
 const courses = [
   { id: 1, name: "course 1" },
