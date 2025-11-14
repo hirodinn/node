@@ -27,6 +27,21 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
+//post
+
+app.post("/users", async (req, res) => {
+  const { name, email } = req.body;
+  try {
+    const newUser = await pool.query(
+      "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *",
+      [name, email]
+    );
+    res.status(201).json(newUser.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 //port
 
 const PORT = 3000;
