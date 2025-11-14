@@ -22,30 +22,32 @@ function App() {
   }
 
   return (
-    <div>
-      {users.map((user, i) => {
-        return (
-          <div
-            key={i}
-            className={`flex justify-between py-3 px-6 text-[20px] items-center ${
-              i % 2 === 0 ? "bg-my-even" : "bg-my-odd"
-            }`}
-          >
-            <p>{user.name}</p>
-            <div>
-              <button
-                className="bg-my-red text-white text-[15px] cursor-pointer shadow-[0px_3px_1px_0px_rgb(255,0,0)]
+    <div className="h-screen box-border overflow-hidden py-6">
+      <div className="h-full box-border overflow-y-scroll overflow-x-hidden w-[90%] max-w-[1000px] mx-auto no-scrollbar">
+        {users.map((user, i) => {
+          return (
+            <div
+              key={i}
+              className={`flex justify-between py-3 px-6 text-[20px] items-center ${
+                i % 2 === 0 ? "bg-my-even" : "bg-my-odd"
+              }`}
+            >
+              <p>{user.name}</p>
+              <div>
+                <button
+                  className="bg-my-red text-white text-[15px] cursor-pointer shadow-[0px_3px_1px_0px_rgb(255,0,0)]
  hover:shadow-none py-1 px-5"
-                onClick={() => {
-                  removeItem(user.id);
-                }}
-              >
-                Remove
-              </button>
+                  onClick={() => {
+                    removeItem(user.id);
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
