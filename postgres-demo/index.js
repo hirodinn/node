@@ -1,7 +1,14 @@
 import express from "express";
+import cors from "cors";
+
 import { pool } from "./db.js";
 
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:5173", // allow your frontend
+  })
+);
 app.use(express.json()); // Parses incoming JSON bodies
 
 //get
