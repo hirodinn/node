@@ -15,6 +15,18 @@ app.get("/users", async (req, res) => {
   }
 });
 
+app.get("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    if (user.rows.length === 0)
+      return res.status(404).json({ msg: "User not found" });
+    res.json(user.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 //port
 
 const PORT = 3000;
