@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [users, setUsers] = useState([]);
   const [showInsertForm, setShowInsertForm] = useState(false);
-  const [loadingAddResponse, setLoadingAddResponse] = useState(true);
+  const [loadingAddResponse, setLoadingAddResponse] = useState(false);
   const [emailText, setEmailText] = useState("");
   const [nameText, setNameText] = useState("");
 
@@ -27,9 +27,26 @@ function App() {
     }
   }
 
-  function handleAdd(e) {
+  async function handleAdd(e) {
     e.preventDefault();
-    console.log("submitted sucessfully");
+    setLoadingAddResponse(true);
+    try {
+      const response = await axios.post("http://localhost:3000/users", {
+        name: nameText,
+        email: emailText,
+      });
+      setUsers([
+        ...users,
+        {
+          name: response.data.name,
+        },
+      ]);
+      setShowInsertForm(false);
+    } catch (error) {
+      alert(error.status);
+    } finally {
+      setLoadingAddResponse(false);
+    }
   }
 
   return (
