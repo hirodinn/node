@@ -5,11 +5,17 @@ function App() {
   useEffect(() => {
     const loadUser = async () => {
       const response = await axios.get("http://localhost:3000/users");
-      console.log(response.data);
+      setUsers(response.data);
     };
     loadUser();
   }, []);
-  return <div>App</div>;
+  return (
+    <div>
+      {users.map((user, i) => {
+        return <div key={i}>{user.name}</div>;
+      })}
+    </div>
+  );
 }
 
 export default App;
