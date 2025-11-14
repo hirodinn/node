@@ -139,7 +139,7 @@ function App() {
               <div className="flex justify-end items-center gap-3 mt-3">
                 <button
                   type="button"
-                  className="button bg-my-red shadow-[0px_3px_1px_0px_rgb(255,0,0)] hover:shadow-none"
+                  className="button bg-my-red shadow-[0px_3px_1px_0px_rgb(253,78,48)] hover:shadow-none"
                   onClick={() => {
                     setShowInsertForm(false);
                   }}
@@ -148,7 +148,7 @@ function App() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-my-green shadow-[0px_3px_1px_0px_rgb(0,255,0)] button hover:shadow-none"
+                  className="bg-my-green shadow-[0px_3px_1px_0px_rgb(33,179,33)] button hover:shadow-none"
                 >
                   Submit
                 </button>

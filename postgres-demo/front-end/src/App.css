@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-my-odd: lightblue;
-  --color-my-even: lightpink;
-  --color-my-red: rgb(255, 0, 0);
+  --color-my-odd: #dbf6ff;
+  --color-my-even: #ffe4ea;
+  --color-my-red: rgb(253, 78, 48);
   --color-my-black: rgba(0, 0, 0, 0.3);
-  --color-my-green: rgb(0, 255, 0);
+  --color-my-green: rgb(33, 179, 33);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -23,4 +23,8 @@
   .button {
     @apply text-white text-[15px] cursor-pointer py-1 px-5 rounded-sm;
   }
+}
+
+.root {
+  color: rgb(33, 179, 33);
 }
