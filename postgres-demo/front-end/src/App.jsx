@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 function App() {
   const [users, setUsers] = useState([]);
   const [showInsertForm, setShowInsertForm] = useState(false);
+  const formRef = useRef(null);
   useEffect(() => {
     const loadUser = async () => {
       const response = await axios.get("http://localhost:3000/users");
@@ -11,6 +12,19 @@ function App() {
     };
     loadUser();
   }, []);
+  useEffect(() => {
+    function check(e) {
+      if (!formRef || !formRef?.current.contains(e.target)) {
+        setShowInsertForm(false);
+      }
+    }
+    setTimeout(() => {
+      showInsertForm && window.addEventListener("click", check);
+    }, 100);
+    return () => {
+      window.removeEventListener("click", check);
+    };
+  }, [showInsertForm]);
 
   async function removeItem(id) {
     try {
@@ -60,7 +74,7 @@ function App() {
       </div>
       {showInsertForm && (
         <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-my-black">
-          <form className="w-70 h-50 bg-white"></form>
+          <form className="w-70 h-50 bg-white" ref={formRef}></form>
         </div>
       )}
     </div>
