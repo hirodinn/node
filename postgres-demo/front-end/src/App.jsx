@@ -42,8 +42,8 @@ function App() {
         },
       ]);
       setShowInsertForm(false);
-    } catch (error) {
-      alert(error.status);
+    } catch {
+      alert("This email address is already used");
     } finally {
       setLoadingAddResponse(false);
     }
