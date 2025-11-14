@@ -77,12 +77,12 @@ function App() {
           );
         })}
         <button
-          className="block ml-auto mt-3"
+          className="block ml-auto mt-3 cursor-pointer bg-gray-200 rounded-3xl px-3 py-1.5"
           onClick={() => {
             setShowInsertForm(true);
           }}
         >
-          plus
+          <i className="fa-solid fa-plus mr-2"></i>Add User
         </button>
       </div>
       {showInsertForm && (
