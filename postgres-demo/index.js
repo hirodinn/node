@@ -42,6 +42,23 @@ app.post("/users", async (req, res) => {
   }
 });
 
+//put
+app.put("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, email } = req.body;
+  try {
+    const updated = await pool.query(
+      "UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *",
+      [name, email, id]
+    );
+    if (updated.rows.length === 0)
+      return res.status(404).json({ msg: "User not found" });
+    res.json(updated.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 //port
 
 const PORT = 3000;
