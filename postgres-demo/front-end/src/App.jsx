@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 function App() {
   const [users, setUsers] = useState([]);
+  const [showInsertForm, setShowInsertForm] = useState(false);
   useEffect(() => {
     const loadUser = async () => {
       const response = await axios.get("http://localhost:3000/users");
@@ -35,8 +36,9 @@ function App() {
               <p>{user.name}</p>
               <div>
                 <button
-                  className="bg-my-red text-white text-[15px] cursor-pointer shadow-[0px_3px_1px_0px_rgb(255,0,0)]
- hover:shadow-none py-1 px-5"
+                  className="bg-my-red text-white text-[15px] cursor-pointer
+                  shadow-[0px_3px_1px_0px_rgb(255,0,0)]
+                  hover:shadow-none py-1 px-5"
                   onClick={() => {
                     removeItem(user.id);
                   }}
@@ -47,7 +49,20 @@ function App() {
             </div>
           );
         })}
+        <button
+          className="block ml-auto mt-3"
+          onClick={() => {
+            setShowInsertForm(true);
+          }}
+        >
+          plus
+        </button>
       </div>
+      {showInsertForm && (
+        <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-my-black">
+          <form className="w-70 h-50 bg-white"></form>
+        </div>
+      )}
     </div>
   );
 }

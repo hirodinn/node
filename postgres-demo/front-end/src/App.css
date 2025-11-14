@@ -4,6 +4,7 @@
   --color-my-odd: lightblue;
   --color-my-even: lightpink;
   --color-my-red: rgb(255, 0, 0);
+  --color-my-black: rgba(0, 0, 0, 0.3);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
