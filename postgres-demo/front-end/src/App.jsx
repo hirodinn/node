@@ -74,7 +74,31 @@ function App() {
       </div>
       {showInsertForm && (
         <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-my-black">
-          <form className="w-70 h-50 bg-white" ref={formRef}></form>
+          <form
+            className="w-[90%] max-w-[900px] bg-white flex flex-col justify-center px-20 py-10 text-[19px]"
+            ref={formRef}
+          >
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              required
+              placeholder="Enter your name: "
+              id="name"
+              className="border-b-2 border-gray-600 w-full focus:outline-none mb-3 h-8"
+            />
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              required
+              placeholder="Enter your email: "
+              id="email"
+              className="border-b-2 border-gray-600 w-full focus:outline-none h-8"
+            />
+            <div className="flex justify-end items-center gap-3 mt-3">
+              <button>Cancel</button>
+              <button type="submit">Submit</button>
+            </div>
+          </form>
         </div>
       )}
     </div>
