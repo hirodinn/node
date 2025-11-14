@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [users, setUsers] = useState([]);
   const [showInsertForm, setShowInsertForm] = useState(false);
+  const [loadingAddResponse, setLoadingAddResponse] = useState(true);
   const [emailText, setEmailText] = useState("");
   const [nameText, setNameText] = useState("");
 
@@ -76,48 +77,52 @@ function App() {
             }
           }}
         >
-          <form
-            className="w-[90%] max-w-[900px] bg-white flex flex-col justify-center px-20 py-10 text-[19px]"
-            ref={formRef}
-            onSubmit={handleAdd}
-          >
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              required
-              placeholder="Enter your name: "
-              id="name"
-              className="border-b-2 border-gray-600 w-full focus:outline-none mb-3 h-8"
-              onChange={(e) => {
-                setNameText(e.target.value);
-              }}
-            />
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              required
-              placeholder="Enter your email: "
-              id="email"
-              className="border-b-2 border-gray-600 w-full focus:outline-none h-8"
-              onChange={(e) => {
-                setEmailText(e.target.value);
-              }}
-            />
-            <div className="flex justify-end items-center gap-3 mt-3">
-              <button
-                type="button"
-                className="button bg-my-red"
-                onClick={() => {
-                  setShowInsertForm(false);
+          {loadingAddResponse ? (
+            <div className="w-10 h-10 rounded-[50%] border-2 border-white border-t-blue-500 animate-spin"></div>
+          ) : (
+            <form
+              className="w-[90%] max-w-[900px] bg-white flex flex-col justify-center px-20 py-10 text-[19px]"
+              ref={formRef}
+              onSubmit={handleAdd}
+            >
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                required
+                placeholder="Enter your name: "
+                id="name"
+                className="border-b-2 border-gray-600 w-full focus:outline-none mb-3 h-8"
+                onChange={(e) => {
+                  setNameText(e.target.value);
                 }}
-              >
-                Cancel
-              </button>
-              <button type="submit" className="button bg-my-green">
-                Submit
-              </button>
-            </div>
-          </form>
+              />
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                required
+                placeholder="Enter your email: "
+                id="email"
+                className="border-b-2 border-gray-600 w-full focus:outline-none h-8"
+                onChange={(e) => {
+                  setEmailText(e.target.value);
+                }}
+              />
+              <div className="flex justify-end items-center gap-3 mt-3">
+                <button
+                  type="button"
+                  className="button bg-my-red"
+                  onClick={() => {
+                    setShowInsertForm(false);
+                  }}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="button bg-my-green">
+                  Submit
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       )}
     </div>
