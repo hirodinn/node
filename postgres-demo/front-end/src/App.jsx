@@ -50,8 +50,8 @@ function App() {
   }
 
   return (
-    <div className="h-screen box-border overflow-hidden py-6">
-      <div className="h-full box-border overflow-y-scroll overflow-x-hidden w-[90%] max-w-[1000px] mx-auto no-scrollbar">
+    <div className="h-screen box-border overflow-hidden py-20">
+      <div className="h-full box-border overflow-y-scroll overflow-x-hidden w-[90%] max-w-[1000px] mx-auto no-scrollbar shadow-[0_0_10px_1px_rgba(0,0,233,0.3)] rounded-3xl">
         {users.map((user, i) => {
           return (
             <div
@@ -76,6 +76,8 @@ function App() {
             </div>
           );
         })}
+      </div>
+      <div className="w-[90%] max-w-[1000px] mx-auto">
         <button
           className="block ml-auto mt-3 cursor-pointer bg-gray-200 rounded-3xl px-3 py-1.5"
           onClick={() => {
@@ -85,6 +87,7 @@ function App() {
           <i className="fa-solid fa-plus mr-2"></i>Add User
         </button>
       </div>
+
       {showInsertForm && (
         <div
           className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-my-black"
