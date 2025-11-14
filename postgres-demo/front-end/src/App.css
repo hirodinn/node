@@ -21,6 +21,6 @@
 
 @layer components {
   .button {
-    @apply text-white text-[15px] cursor-pointer hover:shadow-none py-1 px-5 rounded-sm;
+    @apply text-white text-[15px] cursor-pointer py-1 px-5 rounded-sm;
   }
 }

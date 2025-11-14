@@ -9,6 +9,7 @@ function App() {
   const [nameText, setNameText] = useState("");
 
   const formRef = useRef(null);
+  const containerRef = useRef(null);
   useEffect(() => {
     const loadUser = async () => {
       const response = await axios.get("http://localhost:3000/users");
@@ -16,6 +17,11 @@ function App() {
     };
     loadUser();
   }, []);
+
+  useEffect(() => {
+    if (containerRef)
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [users]);
 
   async function removeItem(id) {
     try {
@@ -51,7 +57,10 @@ function App() {
 
   return (
     <div className="h-screen box-border overflow-hidden py-20">
-      <div className="h-full box-border overflow-y-scroll overflow-x-hidden w-[90%] max-w-[1000px] mx-auto no-scrollbar shadow-[0_0_10px_1px_rgba(0,0,233,0.3)] rounded-3xl">
+      <div
+        className="h-full box-border overflow-y-scroll overflow-x-hidden w-[90%] max-w-[1000px] mx-auto no-scrollbar shadow-[0_0_10px_1px_rgba(0,0,233,0.3)] rounded-3xl"
+        ref={containerRef}
+      >
         {users.map((user, i) => {
           return (
             <div
@@ -130,14 +139,17 @@ function App() {
               <div className="flex justify-end items-center gap-3 mt-3">
                 <button
                   type="button"
-                  className="button bg-my-red"
+                  className="button bg-my-red shadow-[0px_3px_1px_0px_rgb(255,0,0)] hover:shadow-none"
                   onClick={() => {
                     setShowInsertForm(false);
                   }}
                 >
                   Cancel
                 </button>
-                <button type="submit" className="button bg-my-green">
+                <button
+                  type="submit"
+                  className="bg-my-green shadow-[0px_3px_1px_0px_rgb(0,255,0)] button hover:shadow-none"
+                >
                   Submit
                 </button>
               </div>
