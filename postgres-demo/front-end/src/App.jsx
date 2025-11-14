@@ -15,19 +15,6 @@ function App() {
     };
     loadUser();
   }, []);
-  useEffect(() => {
-    function check(e) {
-      if (!formRef || !formRef?.current.contains(e.target)) {
-        setShowInsertForm(false);
-      }
-    }
-    setTimeout(() => {
-      showInsertForm && window.addEventListener("click", check);
-    }, 100);
-    return () => {
-      window.removeEventListener("click", check);
-    };
-  }, [showInsertForm]);
 
   async function removeItem(id) {
     try {
@@ -81,7 +68,14 @@ function App() {
         </button>
       </div>
       {showInsertForm && (
-        <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-my-black">
+        <div
+          className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-my-black"
+          onClick={(e) => {
+            if (!formRef || !formRef?.current.contains(e.target)) {
+              setShowInsertForm(false);
+            }
+          }}
+        >
           <form
             className="w-[90%] max-w-[900px] bg-white flex flex-col justify-center px-20 py-10 text-[19px]"
             ref={formRef}
@@ -110,7 +104,13 @@ function App() {
               }}
             />
             <div className="flex justify-end items-center gap-3 mt-3">
-              <button type="button" className="button bg-my-red">
+              <button
+                type="button"
+                className="button bg-my-red"
+                onClick={() => {
+                  setShowInsertForm(false);
+                }}
+              >
                 Cancel
               </button>
               <button type="submit" className="button bg-my-green">
