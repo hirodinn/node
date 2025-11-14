@@ -43,6 +43,7 @@ app.post("/users", async (req, res) => {
 });
 
 //put
+
 app.put("/users/:id", async (req, res) => {
   const { id } = req.params;
   const { name, email } = req.body;
@@ -54,6 +55,23 @@ app.put("/users/:id", async (req, res) => {
     if (updated.rows.length === 0)
       return res.status(404).json({ msg: "User not found" });
     res.json(updated.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//delete
+
+app.delete("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleted = await pool.query(
+      "DELETE FROM users WHERE id=$1 RETURNING *",
+      [id]
+    );
+    if (deleted.rows.length === 0)
+      return res.status(404).json({ msg: "User not found" });
+    res.json({ msg: "User deleted", user: deleted.rows[0] });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
