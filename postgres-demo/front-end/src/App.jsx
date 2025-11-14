@@ -4,6 +4,9 @@ import "./App.css";
 function App() {
   const [users, setUsers] = useState([]);
   const [showInsertForm, setShowInsertForm] = useState(false);
+  const [emailText, setEmailText] = useState("");
+  const [nameText, setNameText] = useState("");
+
   const formRef = useRef(null);
   useEffect(() => {
     const loadUser = async () => {
@@ -36,6 +39,11 @@ function App() {
     }
   }
 
+  function handleAdd(e) {
+    e.preventDefault();
+    console.log("submitted sucessfully");
+  }
+
   return (
     <div className="h-screen box-border overflow-hidden py-6">
       <div className="h-full box-border overflow-y-scroll overflow-x-hidden w-[90%] max-w-[1000px] mx-auto no-scrollbar">
@@ -50,9 +58,9 @@ function App() {
               <p>{user.name}</p>
               <div>
                 <button
-                  className="bg-my-red text-white text-[15px] cursor-pointer
+                  className="bg-my-red button
                   shadow-[0px_3px_1px_0px_rgb(255,0,0)]
-                  hover:shadow-none py-1 px-5"
+                  hover:shadow-none"
                   onClick={() => {
                     removeItem(user.id);
                   }}
@@ -77,6 +85,7 @@ function App() {
           <form
             className="w-[90%] max-w-[900px] bg-white flex flex-col justify-center px-20 py-10 text-[19px]"
             ref={formRef}
+            onSubmit={handleAdd}
           >
             <label htmlFor="name">Name</label>
             <input
@@ -85,6 +94,9 @@ function App() {
               placeholder="Enter your name: "
               id="name"
               className="border-b-2 border-gray-600 w-full focus:outline-none mb-3 h-8"
+              onChange={(e) => {
+                setNameText(e.target.value);
+              }}
             />
             <label htmlFor="email">Email</label>
             <input
@@ -93,10 +105,17 @@ function App() {
               placeholder="Enter your email: "
               id="email"
               className="border-b-2 border-gray-600 w-full focus:outline-none h-8"
+              onChange={(e) => {
+                setEmailText(e.target.value);
+              }}
             />
             <div className="flex justify-end items-center gap-3 mt-3">
-              <button>Cancel</button>
-              <button type="submit">Submit</button>
+              <button type="button" className="button bg-my-red">
+                Cancel
+              </button>
+              <button type="submit" className="button bg-my-green">
+                Submit
+              </button>
             </div>
           </form>
         </div>
