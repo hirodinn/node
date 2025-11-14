@@ -10,6 +10,17 @@ function App() {
     };
     loadUser();
   }, []);
+
+  async function removeItem(id) {
+    try {
+      await axios.delete(`http://localhost:3000/users/${id}`);
+      const temp = users.filter((user) => user.id != id);
+      setUsers(temp);
+    } catch {
+      console.log("error occurred");
+    }
+  }
+
   return (
     <div>
       {users.map((user, i) => {
@@ -25,6 +36,9 @@ function App() {
               <button
                 className="bg-my-red text-white text-[15px] cursor-pointer shadow-[0px_3px_1px_0px_rgb(255,0,0)]
  hover:shadow-none py-1 px-5"
+                onClick={() => {
+                  removeItem(user.id);
+                }}
               >
                 Remove
               </button>
