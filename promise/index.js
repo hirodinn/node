@@ -16,4 +16,4 @@ const p2 = new Promise((resolve, reject) => {
     resolve(2);
   }, 3000);
 });
-Promise.all([p1, p2]).then((result) => console.log(result));
+Promise.race([p1, p2]).then((result) => console.log(result));
