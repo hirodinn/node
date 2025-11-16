@@ -18,14 +18,22 @@
 // });
 // Promise.race([p1, p2]).then((result) => console.log(result));
 
-async function chronological() {
-  console.log("this is before the promise is started");
-  await new Promise((resolve, reject) => {
+function promise1() {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("the first promise is resolved");
-      resolve();
+      resolve(1);
     }, 1000);
   });
-  console.log("after the promise is returned");
 }
-chronological();
+
+// async function chronological() {
+//   console.log("this is before the promise is started");
+//   await new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       console.log("the first promise is resolved");
+//       resolve();
+//     }, 1000);
+//   });
+//   console.log("after the promise is returned");
+// }
+// chronological();
