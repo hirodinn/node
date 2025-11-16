@@ -25,6 +25,20 @@ function promise1() {
     }, 1000);
   });
 }
+function promise2() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(2);
+    }, 1000);
+  });
+}
+
+promise1()
+  .then((result) => {
+    console.log(result);
+    return promise2();
+  })
+  .then((result) => console.log(result));
 
 // async function chronological() {
 //   console.log("this is before the promise is started");
