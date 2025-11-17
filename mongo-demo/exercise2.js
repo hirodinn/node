@@ -1,0 +1,26 @@
+import mongoose from "mongoose";
+
+mongoose
+  .connect("mongodb://localhost/playground")
+  .then(() => console.log("Connected To Mongo DB..."))
+  .catch((err) => console.log(err));
+
+const courseSchema = new mongoose.Schema({
+  name: String,
+  author: String,
+  price: Number,
+  date: { type: Date, default: Date.now() },
+  tags: [String],
+  isPublished: Boolean,
+});
+
+const Course = mongoose.model("Course", courseSchema);
+
+async function getCourses() {
+  const result = await Course.find()
+    .select({ name: 1, author: 1 })
+    .or([{ tags: "frontend" }, { tags: "backend" }])
+    .sort({ price: -1 });
+  console.log(result);
+}
+getCourses();
