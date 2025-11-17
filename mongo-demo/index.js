@@ -27,11 +27,15 @@ async function createCourse() {
 }
 
 async function getCourses() {
-  //const result = await Course.find();  this just returns the whole document no customization
   //const result = await Course.find({ author: "Hire Bikila" }); this filters out based on the properties we can write any property and it just filters out
   //const result = await Course.find().limit(2); this limits the number of objects returned from the find array
   //const result = await Course.find().sort({ name: -1 }); Sorts based on some attribute of the schema and 1 for asending -1 for descending
   //const result = await Course.find().select({ name: 1, author: 1 }); This filters some attributes from the schema to be returned 1 to include them
+
+  // eq, ne, gt, lt, gte, lte, in, nin
+
+  const result = await Course.find({ price: { $lte: 10 } }); //this just returns the whole document no customization
+
   console.log(result);
 }
 
