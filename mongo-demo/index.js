@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { get } from "mongoose";
 
 mongoose
   .connect("mongodb://localhost/playground")
-  .then(() => console.log("connected to mongo DB"))
+  .then(() => console.log("Connected to Mongo DB..."))
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
@@ -14,16 +14,25 @@ const courseSchema = new mongoose.Schema({
 });
 
 const Course = mongoose.model("Course", courseSchema);
+async function createCourse() {
+  const course = new Course({
+    name: "frontend learning course",
+    author: "Mosh Hamedani",
+    tags: ["javascript", "react", "frontend"],
+    isPublished: true,
+  });
 
-const course = new Course({
-  name: "Node learning course",
-  author: "Hire Bikila",
-  tags: ["node", "mongo", "backend"],
-  isPublished: true,
-});
-
-async function saveToDb() {
   const result = await course.save();
   console.log(result);
 }
-saveToDb();
+
+async function getCourses() {
+  //const result = await Course.find();  this just returns the whole document no customization
+  //const result = await Course.find({ author: "Hire Bikila" }); this filters out based on the properties we can write any property and it just filters out
+  //const result = await Course.find().limit(2); this limits the number of objects returned from the find array
+  //const result = await Course.find().sort({ name: -1 }); Sorts based on some attribute of the schema and 1 for asending -1 for descending
+  //const result = await Course.find().select({ name: 1, author: 1 }); This filters some attributes from the schema to be returned 1 to include them
+  console.log(result);
+}
+
+getCourses();
