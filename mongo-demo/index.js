@@ -46,7 +46,14 @@ async function getCourses() {
   //const result = await Course.find({ author: /^hire/i }); starts with hire, case insensitive
   //const result = await Course.find({ author: /Bikila$/ }); ends with hire, case sensitive
   //const result = await Course.find({ author: /^hire/i }); starts with hire, case insensitive
-  const result = await Course.find({ author: /.*hire.*/i }).countDocuments(); //counts the number of values returned from the query
+  //const result = await Course.find({ author: /.*hire.*/i }).countDocuments(); counts the number of values returned from the query
+
+  const pageNumber = 2;
+  const pageSize = 10;
+  const result = await Course.find()
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageNumber);
+
   console.log(result);
 }
 
