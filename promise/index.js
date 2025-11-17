@@ -18,27 +18,27 @@
 // });
 // Promise.race([p1, p2]).then((result) => console.log(result));
 
-function promise1() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 1000);
-  });
-}
-function promise2() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(2);
-    }, 1000);
-  });
-}
+// function promise1() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(1);
+//     }, 1000);
+//   });
+// }
+// function promise2() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve(2);
+//     }, 1000);
+//   });
+// }
 
-promise1()
-  .then((result) => {
-    console.log(result);
-    return promise2();
-  })
-  .then((result) => console.log(result));
+// promise1()
+//   .then((result) => {
+//     console.log(result);
+//     return promise2();
+//   })
+//   .then((result) => console.log(result));
 
 // async function chronological() {
 //   console.log("this is before the promise is started");
@@ -51,3 +51,33 @@ promise1()
 //   console.log("after the promise is returned");
 // }
 // chronological();
+
+//exercise
+
+async function sendEmail() {
+  const customer = await new Promise((resolve) => {
+    setTimeout(() => {
+      const result = {
+        id: 1,
+        name: "hire bikila",
+        isGold: true,
+        email: "email",
+      };
+      console.log("Customer: ", result);
+      resolve(result);
+    }, 4000);
+  });
+  const movies = await new Promise((resolve) => {
+    setTimeout(() => {
+      const result = ["movie1", "movie2"];
+      console.log("Movies: ", result);
+      resolve(result);
+    }, 4000);
+  });
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Email sent...");
+    }, 4000);
+  });
+}
+sendEmail();
