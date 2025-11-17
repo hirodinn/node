@@ -10,4 +10,14 @@ const courseSchema = new mongoose.Schema({
   author: String,
   tags: [String],
   date: { type: Date, default: Date.now() },
+  isPublished: Boolean,
+});
+
+const Course = mongoose.model("Course", courseSchema);
+
+const course = new Course({
+  name: "Node learning course",
+  author: "Hire Bikila",
+  tags: ["node", "mongo", "backend"],
+  isPublished: true,
 });
