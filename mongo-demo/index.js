@@ -1,4 +1,4 @@
-import mongoose, { get } from "mongoose";
+import mongoose from "mongoose";
 
 mongoose
   .connect("mongodb://localhost/playground")
@@ -8,6 +8,7 @@ mongoose
 const courseSchema = new mongoose.Schema({
   name: String,
   author: String,
+  price: Number,
   tags: [String],
   date: { type: Date, default: Date.now() },
   isPublished: Boolean,
@@ -18,6 +19,7 @@ async function createCourse() {
   const course = new Course({
     name: "frontend learning course",
     author: "Mosh Hamedani",
+    price: 100,
     tags: ["javascript", "react", "frontend"],
     isPublished: true,
   });
@@ -53,8 +55,23 @@ async function getCourses() {
   const result = await Course.find()
     .skip((pageNumber - 1) * pageSize)
     .limit(pageNumber);
-
   console.log(result);
 }
 
-getCourses();
+async function changeCourse(id) {
+  const course = await Course.findById(id);
+  if (!course) {
+    console.log("Course not found");
+    return;
+  }
+  course.set({
+    isPublished: true,
+    author: "Whether author",
+  });
+  // course.isPublished = false;
+  // course.author = "whether author";
+
+  const result = await course.save();
+  console.log(result);
+}
+changeCourse("5a6900fff467be65019a9001");
