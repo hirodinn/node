@@ -38,10 +38,14 @@ async function getCourses() {
 
   //or, and
 
-  const result = await Course.find().or([
-    { author: "Hire Bikila" },
-    { isPublished: false },
-  ]);
+  // const result = await Course.find().or([
+  //   { author: "Hire Bikila" },
+  //   { isPublished: false },
+  // ]);
+
+  //const result = await Course.find({ author: /^hire/i }); starts with hire, case insensitive
+  //const result = await Course.find({ author: /Bikila$/ }); ends with hire, case sensitive
+  const result = await Course.find({ author: /.*hire.*/i }); // has hire, case insensitive
 
   console.log(result);
 }
