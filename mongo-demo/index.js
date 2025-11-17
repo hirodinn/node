@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { set } from "mongoose";
 
 mongoose
   .connect("mongodb://localhost/playground")
@@ -59,19 +59,27 @@ async function getCourses() {
 }
 
 async function changeCourse(id) {
-  const course = await Course.findById(id);
-  if (!course) {
-    console.log("Course not found");
-    return;
-  }
-  course.set({
-    isPublished: true,
-    author: "Whether author",
-  });
+  const result = await Course.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        author: "visible",
+        isPublished: false,
+      },
+    },
+    { new: true }
+  );
+  // if (!course) {
+  //   console.log("Course not found");
+  //   return;
+  //}
+  // course.set({
+  //   isPublished: true,
+  //   author: "Whether author",
+  // });
   // course.isPublished = false;
   // course.author = "whether author";
 
-  const result = await course.save();
   console.log(result);
 }
 changeCourse("5a6900fff467be65019a9001");
