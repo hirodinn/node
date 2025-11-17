@@ -21,3 +21,9 @@ const course = new Course({
   tags: ["node", "mongo", "backend"],
   isPublished: true,
 });
+
+async function saveToDb() {
+  const result = await course.save();
+  console.log(result);
+}
+saveToDb();
