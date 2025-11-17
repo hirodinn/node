@@ -1,4 +1,4 @@
-import mongoose, { set } from "mongoose";
+import mongoose from "mongoose";
 
 mongoose
   .connect("mongodb://localhost/playground")
@@ -50,13 +50,15 @@ async function getCourses() {
   //const result = await Course.find({ author: /^hire/i }); starts with hire, case insensitive
   //const result = await Course.find({ author: /.*hire.*/i }).countDocuments(); counts the number of values returned from the query
 
-  const pageNumber = 2;
-  const pageSize = 10;
-  const result = await Course.find()
-    .skip((pageNumber - 1) * pageSize)
-    .limit(pageNumber);
+  // const pageNumber = 2;
+  // const pageSize = 10;
+  // const result = await Course.find()
+  //   .skip((pageNumber - 1) * pageSize)
+  //   .limit(pageNumber);
+  const result = await Course.find();
   console.log(result);
 }
+getCourses();
 
 async function changeCourse(id) {
   const result = await Course.findByIdAndUpdate(
@@ -82,4 +84,11 @@ async function changeCourse(id) {
 
   console.log(result);
 }
-changeCourse("5a6900fff467be65019a9001");
+
+async function deleteCourse(id) {
+  const result = await Course.deleteMany({ isPublished: true });
+  //const result = await Course.deleteOne({ _id: id });
+  console.log(result);
+}
+
+deleteCourse("691b4aa2e9fb9662d7e739cb");
