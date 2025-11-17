@@ -34,7 +34,14 @@ async function getCourses() {
 
   // eq, ne, gt, lt, gte, lte, in, nin
 
-  const result = await Course.find({ price: { $lte: 10 } }); //this just returns the whole document no customization
+  //const result = await Course.find({ price: { $lte: 10 } }); this just returns an array which their price is less than or equal to 10
+
+  //or, and
+
+  const result = await Course.find().or([
+    { author: "Hire Bikila" },
+    { isPublished: false },
+  ]);
 
   console.log(result);
 }
