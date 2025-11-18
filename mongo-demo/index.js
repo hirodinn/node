@@ -6,7 +6,7 @@ mongoose
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
   author: String,
   price: Number,
   tags: [String],
@@ -17,15 +17,18 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   const course = new Course({
-    name: "frontend learning course",
+    //name: "frontend learning course",
     author: "Mosh Hamedani",
     price: 100,
     tags: ["javascript", "react", "frontend"],
     isPublished: true,
   });
-
-  const result = await course.save();
-  console.log(result);
+  try {
+    const result = await course.save();
+    console.log(result);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function getCourses() {
@@ -91,4 +94,4 @@ async function deleteCourse(id) {
   console.log(result);
 }
 
-deleteCourse("691b4aa2e9fb9662d7e739cb");
+createCourse();
