@@ -24,6 +24,7 @@ async function createCourse() {
     isPublished: true,
   });
   try {
+    //we can also use course.validate() which returns a promise
     const result = await course.save();
     console.log(result);
   } catch (err) {
