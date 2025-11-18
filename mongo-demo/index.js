@@ -46,7 +46,7 @@ async function createCourse() {
     name: "frontend learning course",
     author: "Mosh Hamedani",
     price: 100,
-    category: "web",
+    category: "niun",
     tags: [],
     isPublished: true,
   });
@@ -54,8 +54,10 @@ async function createCourse() {
     //we can also use course.validate() which returns a promise
     const result = await course.save();
     console.log(result);
-  } catch (err) {
-    console.log(err.message);
+  } catch (ex) {
+    for (let field in ex.errors) {
+      console.log(ex.errors[field]);
+    }
   }
 }
 
