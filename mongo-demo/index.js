@@ -20,7 +20,15 @@ const courseSchema = new mongoose.Schema({
   },
   author: String,
   price: Number,
-  tags: [String],
+  tags: {
+    type: Array,
+    validate: {
+      validator: function (v) {
+        return v.length > 0;
+      },
+      message: "a course should have at least one tag",
+    },
+  },
   date: { type: Date, default: Date.now() },
   isPublished: Boolean,
 });
@@ -31,8 +39,8 @@ async function createCourse() {
     name: "frontend learning course",
     author: "Mosh Hamedani",
     price: 100,
-    category: "front",
-    tags: ["javascript", "react", "frontend"],
+    category: "web",
+    tags: [],
     isPublished: true,
   });
   try {
