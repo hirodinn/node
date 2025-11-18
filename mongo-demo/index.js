@@ -6,7 +6,18 @@ mongoose
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: {
+    type: String,
+    required: true,
+    minlength: 10,
+    maxlength: 25,
+    //match:/matching character/
+  },
+  category: {
+    type: String,
+    enum: ["web", "mobile", "network"],
+    required: true,
+  },
   author: String,
   price: Number,
   tags: [String],
@@ -17,9 +28,10 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   const course = new Course({
-    //name: "frontend learning course",
+    name: "frontend learning course",
     author: "Mosh Hamedani",
     price: 100,
+    category: "front",
     tags: ["javascript", "react", "frontend"],
     isPublished: true,
   });
