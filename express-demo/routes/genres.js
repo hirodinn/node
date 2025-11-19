@@ -74,7 +74,7 @@ route.put("/:id", async (req, res) => {
     );
     res.send(result);
   } catch (err) {
-    res.send(err.message);
+    res.status(404).send(err.message);
   }
 });
 
