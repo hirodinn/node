@@ -26,6 +26,7 @@ const courseSchema = new mongoose.Schema({
     type: Number,
     min: 15,
     max: 30,
+    set: (v) => Math.round(v),
   },
   tags: {
     type: Array,
@@ -52,7 +53,7 @@ async function createCourse() {
   const course = new Course({
     name: "frontend learning course",
     author: "Mosh Hamedani",
-    price: 10,
+    price: 16.67,
     category: "WEB",
     tags: ["frontend"],
     isPublished: true,
