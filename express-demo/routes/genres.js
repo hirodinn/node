@@ -21,7 +21,7 @@ const genreMongoSchema = new mongoose.Schema({
 const Genres = mongoose.model("Genre", genreMongoSchema);
 
 const genreSchema = Joi.object({
-  name: Joi.string().min(4).max(11).required(),
+  name: Joi.string().max(11).required(),
 });
 
 //get
@@ -40,8 +40,12 @@ route.post("/", async (req, res) => {
   const genre = new Genres({
     name: req.body.name,
   });
-  const result = await genre.save();
-  res.send(result);
+  try {
+    const result = await genre.save();
+    res.send(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 });
 
 //delete
