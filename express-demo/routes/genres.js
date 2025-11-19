@@ -47,20 +47,31 @@ route.post("/", async (req, res) => {
 //delete
 
 route.delete("/:id", async (req, res) => {
-  const result = await Genres.deleteOne({ _id: req.params.id });
-  res.send(result);
+  try {
+    const result = await Genres.deleteOne({ _id: req.params.id });
+    res.send(result);
+  } catch (err) {
+    res.send(err.message);
+  }
 });
 
 //put
 
 route.put("/:id", async (req, res) => {
-  console.log(req.body.name);
-  const result = await Genres.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: { name: req.body.name } },
-    { new: true }
-  );
-  res.send(result);
+  const { error } = genreSchema.validate(req.body || {});
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+  try {
+    const result = await Genres.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { name: req.body.name } },
+      { new: true }
+    );
+    res.send(result);
+  } catch (err) {
+    res.send(err.message);
+  }
 });
 
 export default route;
