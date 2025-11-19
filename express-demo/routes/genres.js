@@ -55,7 +55,7 @@ route.delete("/:id", async (req, res) => {
     const result = await Genres.deleteOne({ _id: req.params.id });
     res.send(result);
   } catch (err) {
-    res.send(err.message);
+    res.status(400).send(err.message);
   }
 });
 
