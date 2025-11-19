@@ -26,6 +26,7 @@ const courseSchema = new mongoose.Schema({
     type: Number,
     min: 15,
     max: 30,
+    get: (v) => Math.round(v),
     set: (v) => Math.round(v),
   },
   tags: {
@@ -96,8 +97,8 @@ async function getCourses() {
   // const result = await Course.find()
   //   .skip((pageNumber - 1) * pageSize)
   //   .limit(pageNumber);
-  const result = await Course.find();
-  console.log(result);
+  const result = await Course.find({ _id: "691e1d03b011e535d86839de" });
+  console.log(result[0].price);
 }
 getCourses();
 
@@ -132,4 +133,4 @@ async function deleteCourse(id) {
   console.log(result);
 }
 
-createCourse();
+//createCourse();
