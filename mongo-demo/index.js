@@ -17,6 +17,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     enum: ["web", "mobile", "network"],
     required: true,
+    lowercase: true,
+    //uppercase: true,
+    trim: true,
   },
   author: String,
   price: Number,
@@ -46,8 +49,8 @@ async function createCourse() {
     name: "frontend learning course",
     author: "Mosh Hamedani",
     price: 100,
-    category: "niun",
-    tags: [],
+    category: "WEB",
+    tags: ["frontend"],
     isPublished: true,
   });
   try {
@@ -119,7 +122,7 @@ async function changeCourse(id) {
 }
 
 async function deleteCourse(id) {
-  const result = await Course.deleteMany({ isPublished: true });
+  const result = await Course.deleteMany({ name: "frontend learning course" });
   //const result = await Course.deleteOne({ _id: id });
   console.log(result);
 }
