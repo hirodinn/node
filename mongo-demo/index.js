@@ -22,7 +22,11 @@ const courseSchema = new mongoose.Schema({
     trim: true,
   },
   author: String,
-  price: Number,
+  price: {
+    type: Number,
+    min: 15,
+    max: 30,
+  },
   tags: {
     type: Array,
     validate: {
@@ -31,7 +35,7 @@ const courseSchema = new mongoose.Schema({
         await new Promise((resolve) => {
           setTimeout(() => {
             resolve();
-          }, 4000);
+          }, 1000);
         });
 
         return v && v.length > 0;
@@ -48,7 +52,7 @@ async function createCourse() {
   const course = new Course({
     name: "frontend learning course",
     author: "Mosh Hamedani",
-    price: 100,
+    price: 10,
     category: "WEB",
     tags: ["frontend"],
     isPublished: true,
@@ -59,7 +63,7 @@ async function createCourse() {
     console.log(result);
   } catch (ex) {
     for (let field in ex.errors) {
-      console.log(ex.errors[field]);
+      console.log(ex.errors[field].message);
     }
   }
 }
