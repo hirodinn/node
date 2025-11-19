@@ -53,15 +53,14 @@ route.delete("/:id", async (req, res) => {
 
 //put
 
-route.put("/:id", (req, res) => {
-  const genre = genres.find((gen) => gen.id === req.params.id);
-  if (genre) return res.status(404).send("the genre doesn't exist to delete");
-  const { error } = genreSchema.validate(req.body || {});
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
-  genres[genre] = req.body.name;
-  res.send(req.body.name);
+route.put("/:id", async (req, res) => {
+  console.log(req.body.name);
+  const result = await Genres.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { name: req.body.name } },
+    { new: true }
+  );
+  res.send(result);
 });
 
 export default route;
