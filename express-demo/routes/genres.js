@@ -46,11 +46,9 @@ route.post("/", async (req, res) => {
 
 //delete
 
-route.delete("/:id", (req, res) => {
-  const genre = genres.find((gen) => gen.id === req.params.id);
-  if (genre) return res.status(404).send("the genre doesn't exist to delete");
-  genres.splice(genre, 1);
-  res.send(req.params.name);
+route.delete("/:id", async (req, res) => {
+  const result = await Genres.deleteOne({ _id: req.params.id });
+  res.send(result);
 });
 
 //put
