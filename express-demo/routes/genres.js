@@ -1,32 +1,47 @@
 import express from "express";
+import mongoose from "mongoose";
 import Joi from "joi";
+
+mongoose
+  .connect("mongodb://localhost/playground")
+  .then(() => console.log("Connected to Mongo DB..."))
+  .catch((err) => console.log(err));
 
 const route = express.Router();
 
-const genres = [
-  { id: 1, name: "Action" },
-  { id: 2, name: "Horror" },
-  { id: 3, name: "Romance" },
-];
+const genreMongoSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 4,
+    maxlength: 11,
+  },
+});
+
+const Genres = mongoose.model("Genre", genreMongoSchema);
+
 const genreSchema = Joi.object({
   name: Joi.string().min(4).max(11).required(),
 });
 
 //get
 
-route.get("/", (req, res) => {
-  res.send(genres);
+route.get("/", async (req, res) => {
+  res.send(await Genres.find());
 });
 
 //post
 
-route.post("/", (req, res) => {
+route.post("/", async (req, res) => {
   const { error } = genreSchema.validate(req.body || {});
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  genres.push({ id: genres.length + 1, name: req.body.name });
-  res.send(req.body);
+  const genre = new Genres({
+    name: req.body.name,
+  });
+  const result = await genre.save();
+  res.send(result);
 });
 
 //delete
