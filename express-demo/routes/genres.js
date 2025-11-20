@@ -25,6 +25,14 @@ route.get("/", async (req, res) => {
   res.send(await Genres.find());
 });
 
+route.get("/:id", async (req, res) => {
+  try {
+    const result = await Genres.findById(req.params.id);
+    res.send(result);
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+});
 //post
 
 route.post("/", async (req, res) => {
