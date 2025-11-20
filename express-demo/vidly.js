@@ -3,7 +3,7 @@ import express from "express";
 import genres from "./routes/genres.js";
 
 mongoose
-  .connect("mongodb://localhost/playground")
+  .connect("mongodb://localhost/vidly")
   .then(() => console.log("Connected to Mongo DB..."))
   .catch((err) => console.log(err));
 
