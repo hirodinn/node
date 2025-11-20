@@ -1,5 +1,6 @@
-import { required } from "joi";
 import mongoose from "mongoose";
+import express from "express";
+const route = express.Router();
 
 const Customers = mongoose.model(
   "Customer",
@@ -13,3 +14,9 @@ const Customers = mongoose.model(
     },
   })
 );
+
+route.get("/", async (req, res) => {
+  res.send(await Customers.find());
+});
+
+export default route;
