@@ -2,11 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import Joi from "joi";
 
-mongoose
-  .connect("mongodb://localhost/playground")
-  .then(() => console.log("Connected to Mongo DB..."))
-  .catch((err) => console.log(err));
-
 const route = express.Router();
 
 const genreMongoSchema = new mongoose.Schema({
@@ -52,10 +47,10 @@ route.post("/", async (req, res) => {
 
 route.delete("/:id", async (req, res) => {
   try {
-    const result = await Genres.deleteOne({ _id: req.params.id });
+    const result = await Genres.findByIdAndDelete(req.params.id);
     res.send(result);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(404).send(err.message);
   }
 });
 
@@ -67,9 +62,9 @@ route.put("/:id", async (req, res) => {
     return res.status(400).send(error.details[0].message);
   }
   try {
-    const result = await Genres.findOneAndUpdate(
-      { _id: req.params.id },
-      { $set: { name: req.body.name } },
+    const result = await Genres.findByIdAndUpdate(
+      req.params.id,
+      { name: req.body.name },
       { new: true }
     );
     res.send(result);

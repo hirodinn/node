@@ -1,5 +1,11 @@
+import mongoose from "mongoose";
 import express from "express";
 import genres from "./routes/genres.js";
+
+mongoose
+  .connect("mongodb://localhost/playground")
+  .then(() => console.log("Connected to Mongo DB..."))
+  .catch((err) => console.log(err));
 
 const app = express();
 app.use(express.json());
