@@ -15,8 +15,18 @@ const Customers = mongoose.model(
   })
 );
 
+//get
+
 route.get("/", async (req, res) => {
   res.send(await Customers.find());
+});
+
+route.get("/:id", async (req, res) => {
+  try {
+    res.send(await Customers.findById(req.params.id));
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
 });
 
 export default route;
