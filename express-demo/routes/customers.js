@@ -6,7 +6,7 @@ const route = express.Router();
 const Customers = mongoose.model(
   "Customer",
   new mongoose.Schema({
-    name: { type: String, minlength: 5, required: true },
+    name: { type: String, minlength: 5, required: true, trim: true },
     phone: {
       type: String,
       validate: {
