@@ -1,24 +1,8 @@
-import mongoose from "mongoose";
 import express from "express";
-import Joi from "joi";
-const route = express.Router();
+import { Customers } from "../models/customer.js";
+import { validateCustomer } from "../models/customer.js";
 
-const Customers = mongoose.model(
-  "Customer",
-  new mongoose.Schema({
-    name: { type: String, minlength: 5, required: true, trim: true },
-    phone: {
-      type: String,
-      validate: {
-        validator: (v) => v.length === 10,
-      },
-    },
-  })
-);
-const schema = Joi.object({
-  name: Joi.string().required().min(5),
-  phone: Joi.string().length(10).required(),
-});
+const route = express.Router();
 
 //get
 
@@ -37,7 +21,7 @@ route.get("/:id", async (req, res) => {
 //post
 
 route.post("/", async (req, res) => {
-  const { error } = schema.validate(req.body || {});
+  const { error } = validateCustomer(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   try {
     const customer = new Customers(req.body);
@@ -51,7 +35,7 @@ route.post("/", async (req, res) => {
 // put
 
 route.put("/:id", async (req, res) => {
-  const { error } = schema.validate(req.body || {});
+  const { error } = validateCustomer(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   try {
     const result = await Customers.findByIdAndUpdate(req.params.id, req.body, {
