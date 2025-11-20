@@ -62,4 +62,15 @@ route.put("/:id", async (req, res) => {
     res.status(400).send(err.message);
   }
 });
+
+//delete
+
+route.delete("/:id", async (req, res) => {
+  try {
+    const result = await Customers.findByIdAndDelete(req.params.id);
+    res.send(result);
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+});
 export default route;
