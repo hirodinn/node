@@ -44,9 +44,13 @@ async function createMovie(movie, genreId, res) {
   }
 }
 async function deleteMovie(movieId, res) {
-  const result = await Movies.findByIdAndDelete(movieId);
-  if (result) res.send(result);
-  else res.status(404).send("can't find the movie");
+  try {
+    const result = await Movies.findByIdAndDelete(movieId);
+    if (result) res.send(result);
+    else res.status(404).send("can't find the movie");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 }
 //createMovie({ title: "The Lolane Land" }, "6920b9b4fa5fc2947d0b2a81");
 //deleteMovie("6920bcb8de7c7e6acd740bb3");
@@ -65,7 +69,7 @@ route.get("/:id", async (req, res) => {
     if (!result) res.status(404).send("No Movie Found");
     else res.send(result);
   } catch (err) {
-    res.status(404).send(err.message);
+    res.status(400).send(err.message);
   }
 });
 
@@ -75,4 +79,9 @@ route.post("/", async (req, res) => {
   createMovie(req.body, "6920b9ccfa5fc2947d0b2a86", res);
 });
 
+//delete
+
+route.delete("/:id", (req, res) => {
+  deleteMovie(req.params.id, res);
+});
 export default route;
