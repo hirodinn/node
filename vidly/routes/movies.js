@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import express from "express";
+import Joi from "joi";
+
 import { Genres, genreMongoSchema } from "./genres.js";
 
 const route = express.Router();
@@ -29,10 +31,10 @@ async function listMovies(res) {
   res.send(result);
 }
 
-async function createMovie(movie, genreId, res) {
-  const genre = await Genres.findById(genreId);
+async function createMovie(movie, res) {
+  const genre = await Genres.findById(movie.genre);
   if (!genre) {
-    return res.status(404).send("no more genre");
+    return res.status(404).send("No Genre Found");
   }
   try {
     movie.genre = genre;
@@ -76,7 +78,11 @@ route.get("/:id", async (req, res) => {
 //post
 
 route.post("/", async (req, res) => {
-  createMovie(req.body, "6920b9ccfa5fc2947d0b2a86", res);
+  const { error } = validateBody(req.body || {});
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+  createMovie(req.body, res);
 });
 
 //delete
@@ -84,4 +90,14 @@ route.post("/", async (req, res) => {
 route.delete("/:id", (req, res) => {
   deleteMovie(req.params.id, res);
 });
+
+//supportive functions
+
+function validateBody(obj) {
+  const schema = Joi.object({
+    title: Joi.string().min(5).required(),
+    genre: Joi.string().length(24).required(),
+  });
+  return schema.validate(obj);
+}
 export default route;
