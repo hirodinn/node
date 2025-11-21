@@ -14,7 +14,7 @@ const Movies = mongoose.model(
       required: true,
       minlength: 5,
     },
-    genre: { type: genreMongoSchema, required: true },
+    genre: { type: [genreMongoSchema], required: true },
     numberInStock: {
       type: Number,
       default: 0,
@@ -85,6 +85,26 @@ route.post("/", async (req, res) => {
   createMovie(req.body, res);
 });
 
+route.post("/:id", async (req, res) => {
+  const idSchema = Joi.object({
+    genre: Joi.string().length(24).required(),
+  });
+  const { error } = idSchema.validate(req.body || {});
+  if (error) return res.status(400).send(error.details[0].message);
+  try {
+    const movie = await Movies.findById(req.params.id);
+    if (!movie)
+      return res.status(404).send("Can't find a movie with the param id");
+    const genre = await Genres.findById(req.body.genre);
+    if (!genre)
+      return res.status(404).send("Can't find a genre with the body id");
+    movie.genre.push(genre);
+    const result = await movie.save();
+    res.send(result);
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+});
 //delete
 
 route.delete("/:id", (req, res) => {
