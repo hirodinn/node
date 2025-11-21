@@ -61,12 +61,18 @@ route.get("/", (req, res) => {
 
 route.get("/:id", async (req, res) => {
   try {
-    const result = Movies.findById(req.params.id);
-    res.send(result);
+    const result = await Movies.findById(req.params.id);
+    if (!result) res.status(404).send("No Movie Found");
+    else res.send(result);
   } catch (err) {
-    console.log(err);
     res.status(404).send(err.message);
   }
+});
+
+//post
+
+route.post("/", async (req, res) => {
+  createMovie(req.body, "6920b9b4fa5fc2947d0b2a81", res);
 });
 
 export default route;
