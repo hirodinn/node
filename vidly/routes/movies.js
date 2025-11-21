@@ -29,4 +29,19 @@ async function listMovies() {
   console.log(result);
 }
 
+async function createMovie(movie, genreId) {
+  const genre = await Genres.findById(genreId);
+  if (!genre) {
+    return console.log("no more genre");
+  }
+  try {
+    movie.genre = genre;
+    const mo = new Movies(movie);
+    const result = await mo.save();
+    console.log(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+createMovie({ title: "The Lolane Land" }, "6920b9b4fa5fc2947d0b2a81");
 export default route;
