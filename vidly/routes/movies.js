@@ -24,30 +24,37 @@ const Movies = mongoose.model(
   })
 );
 
-async function listMovies() {
+async function listMovies(res) {
   const result = await Movies.find();
-  console.log(result);
+  res.send(result);
 }
 
-async function createMovie(movie, genreId) {
+async function createMovie(movie, genreId, res) {
   const genre = await Genres.findById(genreId);
   if (!genre) {
-    return console.log("no more genre");
+    return res.status(404).send("no more genre");
   }
   try {
     movie.genre = genre;
     const mo = new Movies(movie);
     const result = await mo.save();
-    console.log(result);
+    res.send(result);
   } catch (err) {
-    console.log(err.message);
+    res.status(400).send(err.message);
   }
 }
-async function deleteMovie(movieId) {
+async function deleteMovie(movieId, res) {
   const result = await Movies.findByIdAndDelete(movieId);
-  if (result) console.log(result);
-  else console.log("can't find the movie");
+  if (result) res.send(result);
+  else res.status(404).send("can't find the movie");
 }
 //createMovie({ title: "The Lolane Land" }, "6920b9b4fa5fc2947d0b2a81");
-deleteMovie("6920bcb8de7c7e6acd740bb3");
+//deleteMovie("6920bcb8de7c7e6acd740bb3");
+
+//End points
+
+route.get("/", (req, res) => {
+  listMovies(res);
+});
+
 export default route;
