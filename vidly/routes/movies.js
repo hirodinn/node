@@ -1,6 +1,5 @@
 import express from "express";
-import Joi from "joi";
-import { Movies, validateBody } from "../models/movie.js";
+import { Movies, validateBody, validateId } from "../models/movie.js";
 
 import { Genres } from "./genres.js";
 
@@ -66,10 +65,7 @@ route.post("/", async (req, res) => {
 });
 
 route.post("/:id", async (req, res) => {
-  const idSchema = Joi.object({
-    genre: Joi.string().length(24).required(),
-  });
-  const { error } = idSchema.validate(req.body || {});
+  const { error } = validateId(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   try {
     const movie = await Movies.findById(req.params.id);
