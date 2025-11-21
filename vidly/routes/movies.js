@@ -1,30 +1,10 @@
-import mongoose from "mongoose";
 import express from "express";
 import Joi from "joi";
+import { Movies } from "../models/movie.js";
 
-import { Genres, genreMongoSchema } from "./genres.js";
+import { Genres } from "./genres.js";
 
 const route = express.Router();
-
-const Movies = mongoose.model(
-  "Movie",
-  new mongoose.Schema({
-    title: {
-      type: String,
-      required: true,
-      minlength: 5,
-    },
-    genre: { type: [genreMongoSchema], required: true },
-    numberInStock: {
-      type: Number,
-      default: 0,
-    },
-    dailyRentalRate: {
-      type: Number,
-      default: 0,
-    },
-  })
-);
 
 async function listMovies(res) {
   const result = await Movies.find();
