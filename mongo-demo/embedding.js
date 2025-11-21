@@ -17,7 +17,7 @@ const Course = mongoose.model(
   "Course",
   new mongoose.Schema({
     name: String,
-    authors: authorSchema,
+    authors: [authorSchema],
   })
 );
 
