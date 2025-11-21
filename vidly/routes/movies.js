@@ -53,8 +53,20 @@ async function deleteMovie(movieId, res) {
 
 //End points
 
+//get
+
 route.get("/", (req, res) => {
   listMovies(res);
+});
+
+route.get("/:id", async (req, res) => {
+  try {
+    const result = Movies.findById(req.params.id);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send(err.message);
+  }
 });
 
 export default route;
