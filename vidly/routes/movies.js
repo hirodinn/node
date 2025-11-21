@@ -1,6 +1,6 @@
 import express from "express";
 import Joi from "joi";
-import { Movies } from "../models/movie.js";
+import { Movies, validateBody } from "../models/movie.js";
 
 import { Genres } from "./genres.js";
 
@@ -58,7 +58,7 @@ route.get("/:id", async (req, res) => {
 //post
 
 route.post("/", async (req, res) => {
-  const { error } = validateBody(req.body || {});
+  const { error } = validateBody(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
@@ -91,13 +91,4 @@ route.delete("/:id", (req, res) => {
   deleteMovie(req.params.id, res);
 });
 
-//supportive functions
-
-function validateBody(obj) {
-  const schema = Joi.object({
-    title: Joi.string().min(5).required(),
-    genre: Joi.string().length(24).required(),
-  });
-  return schema.validate(obj);
-}
 export default route;
