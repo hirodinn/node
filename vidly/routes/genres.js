@@ -4,7 +4,7 @@ import Joi from "joi";
 
 const route = express.Router();
 
-const genreMongoSchema = new mongoose.Schema({
+export const genreMongoSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -13,7 +13,7 @@ const genreMongoSchema = new mongoose.Schema({
   },
 });
 
-const Genres = mongoose.model("Genre", genreMongoSchema);
+export const Genres = mongoose.model("Genre", genreMongoSchema);
 
 const genreSchema = Joi.object({
   name: Joi.string().max(11).required(),
