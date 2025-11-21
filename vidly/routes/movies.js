@@ -72,7 +72,7 @@ route.get("/:id", async (req, res) => {
 //post
 
 route.post("/", async (req, res) => {
-  createMovie(req.body, "6920b9b4fa5fc2947d0b2a81", res);
+  createMovie(req.body, "6920b9ccfa5fc2947d0b2a86", res);
 });
 
 export default route;
