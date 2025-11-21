@@ -43,5 +43,11 @@ async function createMovie(movie, genreId) {
     console.log(err.message);
   }
 }
-createMovie({ title: "The Lolane Land" }, "6920b9b4fa5fc2947d0b2a81");
+async function deleteMovie(movieId) {
+  const result = await Movies.findByIdAndDelete(movieId);
+  if (result) console.log(result);
+  else console.log("can't find the movie");
+}
+//createMovie({ title: "The Lolane Land" }, "6920b9b4fa5fc2947d0b2a81");
+deleteMovie("6920bcb8de7c7e6acd740bb3");
 export default route;
