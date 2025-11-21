@@ -58,5 +58,8 @@ async function removeAuthor(courseId, authorId) {
 
 //removeAuthor("5b8d9c752af5cb7130206e55", "5b8d9d3412a2833fc45382d2");
 // addAuthor('5b8d9c752af5cb7130206e55', new Author({ name: 'Amy' }))
-//createCourse("Node Course", new Author({ name: "Mosh" }));
-updateCourse("691f72388c576a49c2d45b25");
+createCourse("Node Course", [
+  new Author({ name: "Mosh" }),
+  new Author({ name: "Hire" }),
+]);
+//updateCourse("691f72388c576a49c2d45b25");
