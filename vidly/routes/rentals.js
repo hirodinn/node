@@ -30,13 +30,15 @@ route.post("/", async (req, res) => {
     if (!movie) return res.status(404).send("Movie with Id Not Found");
     const customer = await Customers.findById(req.body.customerId);
     if (!customer) return res.status(404).send("Customer with Id Not Found");
+    console.log(customer);
+    console.log(movie);
 
     const rental = new Rental({
       customer: customer,
       movie: movie,
       returnDate: req.body.returnDate,
     });
-    const result = rental.save();
+    const result = await rental.save();
     res.send(result);
   } catch (err) {
     res.status(500).send(err.message);

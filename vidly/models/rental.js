@@ -1,7 +1,27 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import { customerSchema } from "./customer.js";
-import { movieSchema } from "./movie.js";
+
+const movieSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+});
+
+const customerSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+});
 
 export const Rental = mongoose.model(
   "Rental",
