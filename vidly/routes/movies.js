@@ -77,13 +77,13 @@ route.post("/", async (req, res) => {
 });
 
 route.post("/:id", async (req, res) => {
-  const { error } = validateId(req.body.genre);
+  const { error } = validateId(req.body.id);
   if (error) return res.status(400).send(error.details[0].message);
   try {
     const movie = await Movies.findById(req.params.id);
     if (!movie)
       return res.status(404).send("Can't find a movie with the param id");
-    const genre = await Genres.findById(req.body.genre);
+    const genre = await Genres.findById(req.body.id);
     if (!genre)
       return res.status(404).send("Can't find a genre with the body id");
     movie.genre.push(genre);
