@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { Customers, customerSchema } from "./customer.js";
-import { Movies, movieSchema } from "./movie.js";
+import { customerSchema } from "./customer.js";
+import { movieSchema } from "./movie.js";
 
 export const Rental = mongoose.model(
   "Rental",
