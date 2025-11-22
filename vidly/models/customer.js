@@ -1,18 +1,17 @@
 import mongoose from "mongoose";
 import Joi from "joi";
 
-export const Customers = mongoose.model(
-  "Customer",
-  new mongoose.Schema({
-    name: { type: String, minlength: 5, required: true, trim: true },
-    phone: {
-      type: String,
-      validate: {
-        validator: (v) => v.length === 10,
-      },
+export const customerSchema = new mongoose.Schema({
+  name: { type: String, minlength: 5, required: true, trim: true },
+  phone: {
+    type: String,
+    validate: {
+      validator: (v) => v.length === 10,
     },
-  })
-);
+  },
+});
+
+export const Customers = mongoose.model("Customer", customerSchema);
 
 export function validateCustomer(customer) {
   const schema = Joi.object({
