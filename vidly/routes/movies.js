@@ -12,8 +12,19 @@ async function listMovies(res) {
 }
 
 async function createMovie(movie, res) {
-  const genre = await Genres.findById(movie.genre);
-  if (!genre) {
+  let genre;
+  if (typeof movie.genre === "string")
+    genre = await Genres.findById(movie.genre);
+  else {
+    genre = [];
+    for (let i of movie.genre) {
+      const { error } = validateId(i);
+      if (error) continue;
+      const temp = await Genres.findById(i);
+      genre.push(temp);
+    }
+  }
+  if (!genre || genre.length === 0) {
     return res.status(404).send("No Genre Found");
   }
   try {
