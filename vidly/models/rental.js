@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Joi from "joi";
 import { customerSchema } from "./customer.js";
 import { movieSchema } from "./movie.js";
 
@@ -20,3 +21,13 @@ export const Rental = mongoose.model(
     },
   })
 );
+
+export function validateRental(obj) {
+  const schema = Joi.object({
+    customerId: Joi.string().required().length(24),
+    movieId: Joi.string().required().length(24),
+    rentDate: Joi.date(),
+    returnDate: Joi.date().required(),
+  });
+  return schema.validate(obj || {});
+}
