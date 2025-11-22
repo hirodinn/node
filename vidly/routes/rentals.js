@@ -45,4 +45,19 @@ route.post("/", async (req, res) => {
   }
 });
 
+//delete
+
+route.delete("/:id", async (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  try {
+    const result = await Rental.findByIdAndDelete(req.params.id);
+    if (result) res.send(result);
+    else res.status(404).send("Can't find Rental with the id");
+  } catch (err) {
+    res.status(400).send("Invalid ID");
+  }
+});
+
 export default route;
