@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-import { Customers, customerSchema } from "./customer";
-import { Movies, movieSchema } from "./movie";
-const Rental = mongoose.model(
+import { Customers, customerSchema } from "./customer.js";
+import { Movies, movieSchema } from "./movie.js";
+
+export const Rental = mongoose.model(
   "Rental",
   new mongoose.Schema({
     customer: {
@@ -10,11 +11,11 @@ const Rental = mongoose.model(
     },
     movie: { type: movieSchema, required: true },
     rentDate: {
-      type: date,
+      type: Date,
       default: Date.now(),
     },
     returnDate: {
-      type: date,
+      type: Date,
       required: true,
     },
   })
