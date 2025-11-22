@@ -30,10 +30,3 @@ export function validateBody(obj) {
   });
   return schema.validate(obj || {});
 }
-
-export function validateId(id) {
-  const schema = Joi.object({
-    genre: Joi.string().length(24).required(),
-  });
-  return schema.validate(id || {});
-}

@@ -1,5 +1,6 @@
 import express from "express";
-import { Movies, validateBody, validateId } from "../models/movie.js";
+import { Movies, validateBody } from "../models/movie.js";
+import validateId from "../utils/validateId.js";
 
 import { Genres } from "./genres.js";
 
@@ -65,7 +66,7 @@ route.post("/", async (req, res) => {
 });
 
 route.post("/:id", async (req, res) => {
-  const { error } = validateId(req.body);
+  const { error } = validateId(req.body.genre);
   if (error) return res.status(400).send(error.details[0].message);
   try {
     const movie = await Movies.findById(req.params.id);
