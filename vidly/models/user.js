@@ -33,5 +33,5 @@ export function validateUser(user) {
       .min(11),
     password: Joi.string().required().min(10),
   });
-  return schema.validate(user);
+  return schema.validate(user || {});
 }

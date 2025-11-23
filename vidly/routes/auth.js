@@ -14,7 +14,6 @@ route.post("/", async (req, res) => {
     if (!user) return res.status(400).send("Invalid email of Password");
 
     const verified = await bcrypt.compare(req.body.password, user.password);
-    console.log(verified);
     if (verified) res.send("Yes It Is Verified");
     else res.status(400).send("Not Verified");
   } catch (err) {
