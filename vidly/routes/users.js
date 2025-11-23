@@ -1,4 +1,5 @@
 import express from "express";
+import _ from "lodash";
 import { User, validateUser } from "../models/user.js";
 import validateId from "../utils/validateId.js";
 const route = express.Router();
@@ -24,11 +25,13 @@ route.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    let user = User.find({ email: req.body.email });
-    if (user) res.status(400).send("User with email already exists");
-    user = new User(req.body);
-    const result = await user.save();
-    res.send(result);
+    let user = await User.find({ email: req.body.email });
+    console.log(user);
+    if (user.length)
+      return res.status(400).send("User with email already exists");
+    user = new User(_.pick(req.body, ["name", "email", "password"]));
+    await user.save();
+    res.send(_.pick(user, ["_id", "name", "email"]));
   } catch (err) {
     res.status(500).send(err.message);
   }
