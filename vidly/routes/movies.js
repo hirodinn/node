@@ -1,7 +1,7 @@
 import express from "express";
+import mongoose from "mongoose";
 import { Movies, validateBody } from "../models/movie.js";
 import validateId from "../utils/validateId.js";
-
 import { Genres } from "./genres.js";
 
 const route = express.Router();
@@ -79,6 +79,8 @@ route.post("/", async (req, res) => {
 route.post("/:id", async (req, res) => {
   const { error } = validateId(req.body.id);
   if (error) return res.status(400).send(error.details[0].message);
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(400).send("Invalid Movie Id");
   try {
     const movie = await Movies.findById(req.params.id);
     if (!movie)
