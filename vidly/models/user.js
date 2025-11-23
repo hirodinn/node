@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Joi, { required } from "joi";
+import Joi from "joi";
 
 export const User = mongoose.model(
   "User",
@@ -26,7 +26,11 @@ export const User = mongoose.model(
 export function validateUser(user) {
   const schema = Joi.object({
     name: Joi.string().required(),
-    email: Joi.string().required().min(11),
+    email: Joi.string()
+      .email()
+      .pattern(/@gmail\.com$/)
+      .required()
+      .min(11),
     password: Joi.string().required().min(10),
   });
 }
