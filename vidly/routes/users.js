@@ -24,7 +24,9 @@ route.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const user = new User(req.body);
+    let user = User.find({ email: req.body.email });
+    if (user) res.status(400).send("User with email already exists");
+    user = new User(req.body);
     const result = await user.save();
     res.send(result);
   } catch (err) {
