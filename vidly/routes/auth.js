@@ -1,11 +1,8 @@
 import express from "express";
 import Joi from "joi";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
-
-dotenv.config();
 
 const route = express.Router();
 
