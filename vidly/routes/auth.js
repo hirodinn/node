@@ -1,7 +1,11 @@
 import express from "express";
 import Joi from "joi";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
+
+dotenv.config();
 
 const route = express.Router();
 
@@ -14,7 +18,8 @@ route.post("/", async (req, res) => {
     if (!user) return res.status(400).send("Invalid email of Password");
 
     const verified = await bcrypt.compare(req.body.password, user.password);
-    if (verified) res.send("Yes It Is Verified");
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    if (verified) res.send(token);
     else res.status(400).send("Not Verified");
   } catch (err) {
     res.status(500).send(err.message);
