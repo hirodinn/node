@@ -77,10 +77,10 @@ route.post("/", async (req, res) => {
 });
 
 route.post("/:id", async (req, res) => {
-  const { error } = validateId(req.body.id);
-  if (error) return res.status(400).send(error.details[0].message);
-  if (!mongoose.Types.ObjectId.isValid(req.params.id))
-    return res.status(400).send("Invalid Movie Id");
+  var { error } = validateId(req.body.id);
+  if (error) return res.status(400).send("Genre " + error.details[0].message);
+  var { error } = validateId(req.params.id);
+  if (error) return res.status(400).send("Movie " + error.details[0].message);
   try {
     const movie = await Movies.findById(req.params.id);
     if (!movie)

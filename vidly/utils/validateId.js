@@ -1,9 +1,10 @@
 import Joi from "joi";
+import joi from "joi-objectid";
+Joi.objectId = joi(Joi);
 
 export default function validateId(id) {
-  const obj = { id };
   const schema = Joi.object({
-    id: Joi.string().length(24).required(),
+    id: Joi.objectId().required(),
   });
-  return schema.validate(obj || {});
+  return schema.validate({ id } || {});
 }
