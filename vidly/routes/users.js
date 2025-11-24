@@ -13,7 +13,7 @@ route.get("/", async (req, res) => {
 });
 
 route.get("/me", auth, async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).select("-password");
   if (user) return res.send(user);
   else return res.status(404).send("Not Found");
 });
