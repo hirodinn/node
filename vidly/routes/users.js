@@ -2,6 +2,7 @@ import express from "express";
 import _ from "lodash";
 import bcrypt from "bcrypt";
 import { User, validateUser } from "../models/user.js";
+import auth from "../middleware/auth.js";
 import validateId from "../utils/validateId.js";
 const route = express.Router();
 
@@ -9,6 +10,12 @@ const route = express.Router();
 
 route.get("/", async (req, res) => {
   res.send(await User.find());
+});
+
+route.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (user) return res.send(user);
+  else return res.status(404).send("Not Found");
 });
 
 route.get("/:id", async (req, res) => {
