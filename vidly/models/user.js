@@ -1,27 +1,32 @@
 import mongoose from "mongoose";
 import Joi from "joi";
+import jwt from "jsonwebtoken";
 
-export const User = mongoose.model(
-  "User",
-  new mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: /@gmail.com$/,
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 10,
-    },
-  })
-);
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: /@gmail.com$/,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 10,
+  },
+});
+
+userSchema.methods.getAuthToken = function () {
+  const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
+  return token;
+};
+
+export const User = mongoose.model("User", userSchema);
 
 export function validateUser(user) {
   const schema = Joi.object({
