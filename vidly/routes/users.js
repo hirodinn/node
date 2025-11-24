@@ -1,6 +1,7 @@
 import express from "express";
 import _ from "lodash";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { User, validateUser } from "../models/user.js";
 import validateId from "../utils/validateId.js";
 const route = express.Router();
@@ -32,7 +33,10 @@ route.post("/", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
-    res.send(_.pick(user, ["_id", "name", "email"]));
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    res
+      .header("x-auth-token", token)
+      .send(_.pick(user, ["_id", "name", "email"]));
   } catch (err) {
     res.status(500).send(err.message);
   }
