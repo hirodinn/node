@@ -3,6 +3,7 @@ import _ from "lodash";
 import bcrypt from "bcrypt";
 import { User, validateUser } from "../models/user.js";
 import auth from "../middleware/auth.js";
+import admin from "../middleware/admin.js";
 import validateId from "../utils/validateId.js";
 const route = express.Router();
 
@@ -70,11 +71,11 @@ route.put("/:id", async (req, res) => {
 
 //delete
 
-route.delete("/:id", async (req, res) => {
+route.delete("/:id", [auth, admin], async (req, res) => {
   const { error } = validateId(req.params.id);
   if (error) return res.status(400).send("Invalid Id");
 
-  const result = await User.findByIdAndDelete(req.params.id);
+  const result = await User.findByIdAndDelete(req.params.id).select("name _id");
   if (result) res.send(result);
   else res.status(404).send("User with ID already doesn't exist");
 });
