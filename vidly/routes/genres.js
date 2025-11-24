@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import Joi from "joi";
+import auth from "../middleware/auth.js";
 
 const route = express.Router();
 
@@ -35,7 +36,7 @@ route.get("/:id", async (req, res) => {
 });
 //post
 
-route.post("/", async (req, res) => {
+route.post("/", auth, async (req, res) => {
   const { error } = genreSchema.validate(req.body || {});
   if (error) {
     return res.status(400).send(error.details[0].message);
