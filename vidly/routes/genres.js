@@ -45,22 +45,19 @@ route.post("/", auth, async (req, res) => {
   const genre = new Genres({
     name: req.body.name,
   });
-  try {
-    const result = await genre.save();
-    res.send(result);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
+  const result = await genre.save();
+  res.send(result);
 });
 
 //delete
 
 route.delete("/:id", async (req, res) => {
-  try {
-    const result = await Genres.findByIdAndDelete(req.params.id);
-    res.send(result);
-  } catch (err) {
-    res.status(404).send(err.message);
+  const result = await Genres.findByIdAndDelete(req.params.id);
+  if (result) res.send(result);
+  else {
+    const err = new Error("can't find genre with the id");
+    err.statusCode = 404;
+    throw err;
   }
 });
 
