@@ -9,6 +9,7 @@ import movies from "./routes/movies.js";
 import rentals from "./routes/rentals.js";
 import users from "./routes/users.js";
 import auth from "./routes/auth.js";
+import errorHandler from "./middleware/error.js";
 
 dotenv.config();
 if (!process.env.JWT_SECRET) {
@@ -31,6 +32,7 @@ app.use("/api/movies", movies);
 app.use("/api/rentals", rentals);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+app.use(errorHandler);
 
 // port
 const port = process.env.PORT || 3000;
