@@ -1,20 +1,15 @@
 import express from "express";
-import Joi from "joi";
-import joi from "joi-objectid";
-import dotenv from "dotenv";
 import loadDb from "./startup/db.js";
-
-loadDb();
-
-dotenv.config();
-if (!process.env.JWT_SECRET) {
-  console.log("The token doesnt exist");
-  process.exit(1);
-}
-
-Joi.objectId = joi(Joi);
+import loadRoute from "./startup/routes.js";
+import validate from "./startup/validate.js";
+import configure from "./startup/config.js";
 
 const app = express();
+
+validate();
+loadDb();
+loadRoute(app);
+configure();
 
 // port
 const port = process.env.PORT || 3000;
