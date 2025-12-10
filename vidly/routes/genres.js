@@ -27,12 +27,9 @@ route.get("/", async (req, res) => {
 });
 
 route.get("/:id", async (req, res) => {
-  try {
-    const result = await Genres.findById(req.params.id);
-    res.send(result);
-  } catch (err) {
-    res.status(404).send(err.message);
-  }
+  const result = await Genres.findById(req.params.id);
+  if (result) res.send(result);
+  else throw new Error("can't find genre with the id", { status: 400 });
 });
 //post
 

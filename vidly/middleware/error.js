@@ -6,6 +6,5 @@ export default function errorHandler(err, req, res, next) {
     stack: err.stack,
     route: req.originalUrl,
   });
-
-  res.status(500).send("Something went wrong");
+  res.status(500).send(err.message);
 }
