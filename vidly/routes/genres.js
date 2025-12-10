@@ -68,15 +68,16 @@ route.put("/:id", async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  try {
-    const result = await Genres.findByIdAndUpdate(
-      req.params.id,
-      { name: req.body.name },
-      { new: true }
-    );
-    res.send(result);
-  } catch (err) {
-    res.status(404).send(err.message);
+  const result = await Genres.findByIdAndUpdate(
+    req.params.id,
+    { name: req.body.name },
+    { new: true }
+  );
+  if (result) res.send(result);
+  else {
+    const err = new Error("can't find genre with the id");
+    err.statusCode = 404;
+    throw err;
   }
 });
 
