@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Joi from "joi";
 import auth from "../middleware/auth.js";
+import idNotFound from "../utils/idNotFound.js";
 
 const route = express.Router();
 
@@ -29,11 +30,7 @@ route.get("/", async (req, res) => {
 route.get("/:id", async (req, res) => {
   const result = await Genres.findById(req.params.id);
   if (result) res.send(result);
-  else {
-    const err = new Error("can't find genre with the id");
-    err.statusCode = 404;
-    throw err;
-  }
+  else idNotFound();
 });
 //post
 
@@ -54,11 +51,7 @@ route.post("/", auth, async (req, res) => {
 route.delete("/:id", async (req, res) => {
   const result = await Genres.findByIdAndDelete(req.params.id);
   if (result) res.send(result);
-  else {
-    const err = new Error("can't find genre with the id");
-    err.statusCode = 404;
-    throw err;
-  }
+  else idNotFound();
 });
 
 //put
@@ -74,11 +67,7 @@ route.put("/:id", async (req, res) => {
     { new: true }
   );
   if (result) res.send(result);
-  else {
-    const err = new Error("can't find genre with the id");
-    err.statusCode = 404;
-    throw err;
-  }
+  else idNotFound();
 });
 
 export default route;
