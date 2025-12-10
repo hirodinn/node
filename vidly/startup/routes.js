@@ -1,11 +1,11 @@
 import express from "express";
-import genres from "./routes/genres.js";
-import customers from "./routes/customers.js";
-import movies from "./routes/movies.js";
-import rentals from "./routes/rentals.js";
-import users from "./routes/users.js";
-import auth from "./routes/auth.js";
-import errorHandler from "../middleware/error";
+import genres from "../routes/genres.js";
+import customers from "../routes/customers.js";
+import movies from "../routes/movies.js";
+import rentals from "../routes/rentals.js";
+import users from "../routes/users.js";
+import auth from "../routes/auth.js";
+import errorHandler from "../middleware/error.js";
 
 export default function (app) {
   app.use(express.json());
