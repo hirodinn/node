@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Joi from "joi";
 import auth from "../middleware/auth.js";
+import validateId from "../utils/validateId.js";
 import idNotFound from "../utils/idNotFound.js";
 
 const route = express.Router();
@@ -28,6 +29,8 @@ route.get("/", async (req, res) => {
 });
 
 route.get("/:id", async (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
   const result = await Genres.findById(req.params.id);
   if (result) res.send(result);
   else idNotFound();
@@ -49,6 +52,8 @@ route.post("/", auth, async (req, res) => {
 //delete
 
 route.delete("/:id", async (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
   const result = await Genres.findByIdAndDelete(req.params.id);
   if (result) res.send(result);
   else idNotFound();
@@ -57,7 +62,9 @@ route.delete("/:id", async (req, res) => {
 //put
 
 route.put("/:id", async (req, res) => {
-  const { error } = genreSchema.validate(req.body || {});
+  var { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
+  var { error } = genreSchema.validate(req.body || {});
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
