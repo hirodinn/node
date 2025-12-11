@@ -6,8 +6,10 @@ import rentals from "../routes/rentals.js";
 import users from "../routes/users.js";
 import auth from "../routes/auth.js";
 import errorHandler from "../middleware/error.js";
+import responseLogger from "../middleware/responseLogger.js";
 
 export default function (app) {
+  app.use(responseLogger);
   app.use(express.json());
   app.use("/api/genres", genres);
   app.use("/api/customers", customers);
