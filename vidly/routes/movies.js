@@ -49,6 +49,8 @@ route.get("/", (req, res) => {
 });
 
 route.get("/:id", async (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
   const result = await Movies.findById(req.params.id);
   if (!result) res.status(404).send("No Movie Found");
   else res.send(result);
@@ -82,6 +84,8 @@ route.post("/:id", async (req, res) => {
 //delete
 
 route.delete("/:id", (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
   deleteMovie(req.params.id, res);
 });
 
