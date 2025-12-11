@@ -49,6 +49,8 @@ route.put("/:id", async (req, res) => {
 //delete
 
 route.delete("/:id", async (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
   const result = await Customers.findByIdAndDelete(req.params.id);
   if (result) res.send(result);
   else idNotFound();
