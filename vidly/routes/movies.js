@@ -27,23 +27,15 @@ async function createMovie(movie, res) {
   if (!genre || genre.length === 0) {
     return res.status(404).send("No Genre Found");
   }
-  try {
-    movie.genre = genre;
-    const mo = new Movies(movie);
-    const result = await mo.save();
-    res.send(result);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
+  movie.genre = genre;
+  const mo = new Movies(movie);
+  const result = await mo.save();
+  res.send(result);
 }
 async function deleteMovie(movieId, res) {
-  try {
-    const result = await Movies.findByIdAndDelete(movieId);
-    if (result) res.send(result);
-    else res.status(404).send("can't find the movie");
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
+  const result = await Movies.findByIdAndDelete(movieId);
+  if (result) res.send(result);
+  else res.status(404).send("can't find the movie");
 }
 //createMovie({ title: "The Lolane Land" }, "6920b9b4fa5fc2947d0b2a81");
 //deleteMovie("6920bcb8de7c7e6acd740bb3");
@@ -57,13 +49,9 @@ route.get("/", (req, res) => {
 });
 
 route.get("/:id", async (req, res) => {
-  try {
-    const result = await Movies.findById(req.params.id);
-    if (!result) res.status(404).send("No Movie Found");
-    else res.send(result);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
+  const result = await Movies.findById(req.params.id);
+  if (!result) res.status(404).send("No Movie Found");
+  else res.send(result);
 });
 
 //post
@@ -81,19 +69,15 @@ route.post("/:id", async (req, res) => {
   if (error) return res.status(400).send("Genre " + error.details[0].message);
   var { error } = validateId(req.params.id);
   if (error) return res.status(400).send("Movie " + error.details[0].message);
-  try {
-    const movie = await Movies.findById(req.params.id);
-    if (!movie)
-      return res.status(404).send("Can't find a movie with the param id");
-    const genre = await Genres.findById(req.body.id);
-    if (!genre)
-      return res.status(404).send("Can't find a genre with the body id");
-    movie.genre.push(genre);
-    const result = await movie.save();
-    res.send(result);
-  } catch (err) {
-    res.status(404).send(err.message);
-  }
+  const movie = await Movies.findById(req.params.id);
+  if (!movie)
+    return res.status(404).send("Can't find a movie with the param id");
+  const genre = await Genres.findById(req.body.id);
+  if (!genre)
+    return res.status(404).send("Can't find a genre with the body id");
+  movie.genre.push(genre);
+  const result = await movie.save();
+  res.send(result);
 });
 //delete
 
