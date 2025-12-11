@@ -2,6 +2,7 @@ import express from "express";
 import { Customers } from "../models/customer.js";
 import { validateCustomer } from "../models/customer.js";
 import idNotFound from "../utils/idNotFound.js";
+import validateId from "../utils/validateId.js";
 
 const route = express.Router();
 
@@ -12,6 +13,9 @@ route.get("/", async (req, res) => {
 });
 
 route.get("/:id", async (req, res) => {
+  const { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
+
   const result = await Customers.findById(req.params.id);
   if (result) res.send(result);
   else idNotFound();
@@ -30,7 +34,10 @@ route.post("/", async (req, res) => {
 // put
 
 route.put("/:id", async (req, res) => {
-  const { error } = validateCustomer(req.body);
+  var { error } = validateId(req.params.id);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  var { error } = validateCustomer(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const result = await Customers.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
